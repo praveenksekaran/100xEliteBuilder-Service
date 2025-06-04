@@ -82,3 +82,18 @@ class BuilderDef():
                 "status": "error",
                 "message": str(e)
             }
+        
+    async def get_challenges():
+        try:          
+            supabase = BuilderDef.getSupabaseClient()
+            result = supabase.table("view_challenge").select("*").execute()            
+            return {
+                "status": "success",
+                "message": "Challenges retrieved successfully",
+                "data": result.data
+            }            
+        except Exception as e:
+            return {
+                "status": "error",
+                "message": str(e)
+            }

@@ -51,3 +51,4 @@ class ChallengeAll(BaseModel):
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
+    

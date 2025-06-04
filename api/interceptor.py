@@ -8,6 +8,7 @@ from fastapi.encoders import jsonable_encoder
 import apiService
 import dataService
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 load_dotenv()
 
@@ -49,16 +50,23 @@ async def create_challenge(challengeAll: dataService.ChallengeAll):
 
 @app.post("/create_reward")
 async def create_reward(reward: dataService.Rewards):
-    try:
-        print("reward Data:", {
-            "reward_type_id": reward.reward_type_id,
-            "sponsor_id": reward.sponsor_id,
-            "description": reward.description,
-            "value": reward.value           
-        })
+    try:       
         return await apiService.BuilderDef.create_reward(reward)
     except Exception as e:
         return {
             "status": "error",
             "message": str(e)
         }
+
+@app.get("/get_challenges")
+async def get_challenges():
+    try:               
+        return await apiService.BuilderDef.get_challenges()
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
+    
+#if __name__ == "__main__":
+#    uvicorn.run(app, host="0.0.0.0", port=7860)
